@@ -1,0 +1,33 @@
+== 1. Resource records: BST vs AVL (ids inserted in sorted order, every id searched) ==
+n      BST_height  AVL_height  BST_avg_cmp  AVL_avg_cmp  AVL_rotations
+1000   1000        10          500.5        9.0          990
+2000   2000        11          1000.5       10.0         1989
+4000   4000        12          2000.5       11.0         3988
+8000   8000        13          4000.5       12.0         7987
+
+== 2. Clash detection: all-pairs vs sort-and-sweep (40 resources, 400 slots) ==
+requests  edges    naive_checks  sweep_checks  naive_ms   sweep_ms
+1000      136      499500        1135          46.04      0.73      same-graph
+2000      486      1999000       2485          192.73     1.63      same-graph
+4000      1963     7998000       5962          760.80     4.05      same-graph
+8000      7934     31996000      15933         3315.68    11.29     same-graph
+
+== 3. Allocation: heap-greedy vs DP (avg of 20 seeds, 40 resources) ==
+requests  slots  greedy_accepted  dp_accepted  greedy_weight  dp_weight  dp_gain_%
+1000      300    854.6            857.3        4908.9         4916.5     0.15
+2000      300    1491.1           1506.5       8899.5         8948.8     0.55
+4000      300    2379.3           2451.2       15062.4        15298.5    1.57
+4000      100    1325.2           1484.8       9582.5         10225.5    6.71
+8000      100    1620.7           2024.6       12618.9        14511.2    15.00
+
+== 4. Colouring one resource's requests: Welch-Powell vs exact (avg over 30 seeds) ==
+requests  optimum(avg)  WelchPowell(avg)  WP_not_optimal  plain_nodes  BnB_nodes  node_cut_%
+8         3.20          3.20              0               1345         21         98.4
+10        3.23          3.23              0               31608        28         99.9
+12        3.30          3.30              0               1035812      37         100.0
+
+== 5. Larger single-resource cases, exact B&B only (100 seeds) ==
+requests  optimum(avg)  WelchPowell(avg)  WP_not_optimal  BnB_nodes(avg)  all_complete
+20        3.91          3.91              0               84              yes
+30        4.19          4.19              0               259             yes
+40        4.39          4.39              0               408             yes

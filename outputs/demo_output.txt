@@ -1,0 +1,10 @@
+Clashing pairs found: 5
+  request 0 (res 201) clashes with request 1
+  request 1 (res 201) clashes with request 3
+  request 2 (res 201) clashes with request 3
+  request 4 (res 101) clashes with request 5
+  request 6 (res 401) clashes with request 7
+Heap-greedy accepted: [1, 2, 4, 6] (priority total 31 )
+DP-optimal accepted:  [1, 2, 4, 6] (priority total 31 )
+Lookup 201 -> lab, capacity 40
+Lookup 999 -> not found

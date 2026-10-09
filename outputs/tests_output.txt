@@ -1,0 +1,14 @@
+PASS  AVL balanced + inorder sorted (1000 sorted inserts)
+PASS  BST height n vs AVL height log n on sorted input
+PASS  AVL find hit / miss
+PASS  Heap pops in non-increasing priority
+PASS  Sweep graph == naive graph on 20 seeds
+PASS  Greedy result is clash-free on 20 seeds
+PASS  DP == brute force on 60 small cases
+PASS  DP total >= greedy total on 30 campuses
+PASS  DP selection clash-free and total matches
+PASS  B&B colouring == max overlap == plain backtracking (60 cases)
+PASS  Welch-Powell colours >= optimum (60 cases)
+PASS  Welch-Powell colouring is proper
+
+12 / 12 tests passed
