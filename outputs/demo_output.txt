@@ -1,10 +1,110 @@
-Clashing pairs found: 5
-  request 0 (res 201) clashes with request 1
-  request 1 (res 201) clashes with request 3
-  request 2 (res 201) clashes with request 3
-  request 4 (res 101) clashes with request 5
-  request 6 (res 401) clashes with request 7
-Heap-greedy accepted: [1, 2, 4, 6] (priority total 31 )
-DP-optimal accepted:  [1, 2, 4, 6] (priority total 31 )
-Lookup 201 -> lab, capacity 40
-Lookup 999 -> not found
+====================================================================================================
+INTELLIGENT CAMPUS RESOURCES OPTIMIZATION SYSTEM - booking workflow demo
+DATA: clearly labelled SAMPLE data (fictional). It is NOT real campus data.
+====================================================================================================
+
+1. RESOURCE INVENTORY (stored in an AVL tree keyed by resource ID)
+ID       Type           Cap  Status                      Equipment
+AUD-1    seminar_hall   300  open all day                microphone, projector, stage
+CR-101   classroom       60  open all day                projector, whiteboard
+CR-102   classroom       60  open all day                whiteboard
+CR-201   classroom      120  open all day                microphone, projector, whiteboard
+CRT-BB   indoor_court    30  open 06:00-21:00            floodlights, scoreboard
+CRT-BD   indoor_court    16  open 06:00-21:00            floodlights
+GRD-1    sports_ground  200  open 06:00-19:00            goalposts
+LAB-CHEM lab             24  OUT OF SERVICE              fume_hood
+LAB-CS1  lab             40  open all day                computers, projector
+LAB-CS2  lab             40  open all day +maint.        computers
+LAB-PHY  lab             30  open all day                oscilloscopes
+PRJ-01   projector        1  open all day                hdmi
+PRJ-02   projector        1  open all day                hdmi, vga
+
+2. BOOKING REQUESTS (24 submitted)
+#  Requester / dept                    Type          When                Pri  Cap  Needs
+1  Prof. R. Sharma / CSE               classroom     Mon 09:00-10:00       9   55  projector
+2  Dr. A. Khan / ECE                   classroom     Mon 09:00-11:00       8   50  projector
+3  Dr. P. Nair / Maths                 classroom     Mon 09:30-10:30       7   55  projector
+4  Ms. S. Iyer / English               classroom     Mon 09:00-10:00       4   40  
+5  Prof. T. Das / Mechanical           classroom     Mon 11:00-12:00       6  150  
+6  Dr. L. Fernandes / Civil            classroom     Mon 10:00-11:00       5   40  smartboard
+16 Photography Club / Student Clubs    projector     Mon 15:00-17:00       3    1  hdmi
+17 Debate Society / Student Clubs      projector     Mon 16:00-18:00       4    1  vga
+18 Dance Club / Student Clubs          projector     Mon 16:30-17:30       2    1  hdmi
+7  Dr. M. Rao / CSE                    lab           Tue 14:00-17:00       8   35  computers
+8  Dr. N. Pillai / IT                  lab           Tue 14:00-17:00       8   35  computers
+9  Mr. K. Joshi / AI&DS                lab           Tue 14:00-17:00       7   35  computers
+10 Dr. V. Menon / Physics              lab           Tue 14:00-16:00       6   25  oscilloscopes
+11 Dr. H. Bose / Chemistry             lab           Tue 10:00-12:00       7   20  fume_hood
+12 Mr. D. Singh / CSE                  lab           Wed 10:00-12:00       5   30  computers [only LAB-CS2]
+13 Student Council / Student Affairs   seminar_hall  Tue 09:00-13:00       6  200  stage
+14 Alumni Cell / Alumni Relations      seminar_hall  Tue 09:00-11:00       5  150  microphone
+15 Placement Cell / Training & Placem  seminar_hall  Tue 11:00-13:00       5  150  microphone
+19 Football Team / Sports Committee    sports_ground Wed 16:00-18:00       7   80  goalposts
+20 Athletics Squad / Sports Committee  sports_ground Wed 17:00-19:00       5   40  
+21 Hostel Council / Hostel Affairs     sports_ground Wed 19:00-21:00       4   40  
+22 Basketball Club / Sports Committee  indoor_court  Wed 18:00-20:00       6   20  floodlights
+23 Badminton Club / Sports Committee   indoor_court  Wed 18:00-20:00       5   12  floodlights
+24 Inter-college Meet / Sports Commit  indoor_court  Wed 18:30-20:30       9   25  floodlights, scoreboard
+
+3. CONFLICT GRAPH (requests that overlap in time AND could use the same resource)
+   19 suitable requests, 18 competing pairs:
+   #1-#2, #1-#3, #1-#4, #2-#3, #2-#4, #3-#4, #7-#8, #7-#9, #8-#9, #13-#14, #13-#15, #16-#17, #16-#18, #17-#18, #19-#20, #22-#23, #22-#24, #23-#24
+
+4. ALLOCATION STAGES (value = sum of request priorities)
+   heap, highest priority first : value  77  (12 bookings)
+   + dynamic programming        : value  81
+       DP re-planned AUD-1: 6 -> 10
+   + room mapping and fill      : value  81  (13 bookings)  of 141 requested in total
+
+5. GRAPH COLOURING -> ROOM MAPPING (flexible bookings only; applied only when valid)
+   classroom    3 flexible bookings need 3 room(s); rooms used 3 -> 3; valid mapping applied
+   lab          2 flexible bookings need 2 room(s); rooms used 2 -> 2; valid mapping applied
+
+6. ACCEPTED BOOKINGS (by resource)
+   AUD-1    Tue 09:00-11:00     #14 Alumni Cell (Alumni Relations) - Guest lecture, priority 5
+   AUD-1    Tue 11:00-13:00     #15 Placement Cell (Training & Placement) - Industry talk, priority 5
+   CR-101   Mon 09:00-10:00     #1  Prof. R. Sharma (CSE) - Lecture, priority 9
+   CR-102   Mon 09:00-10:00     #4  Ms. S. Iyer (English) - Workshop, priority 4
+   CR-201   Mon 09:00-11:00     #2  Dr. A. Khan (ECE) - Lecture, priority 8
+   CRT-BB   Wed 18:30-20:30     #24 Inter-college Meet (Sports Committee) - Basketball match, priority 9
+   CRT-BD   Wed 18:00-20:00     #23 Badminton Club (Sports Committee) - Practice, priority 5
+   GRD-1    Wed 16:00-18:00     #19 Football Team (Sports Committee) - Match practice, priority 7
+   LAB-CS1  Tue 14:00-17:00     #7  Dr. M. Rao (CSE) - DSA lab, section A, priority 8
+   LAB-CS2  Tue 14:00-17:00     #8  Dr. N. Pillai (IT) - DBMS lab, section B, priority 8
+   LAB-PHY  Tue 14:00-16:00     #10 Dr. V. Menon (Physics) - Optics practical, priority 6
+   PRJ-01   Mon 15:00-17:00     #16 Photography Club (Student Clubs) - Photo walk review, priority 3
+   PRJ-02   Mon 16:00-18:00     #17 Debate Society (Student Clubs) - Practice round, priority 4
+
+7. REJECTED BOOKINGS (with reason)
+   #3  Dr. P. Nair (Maths), Mon 09:30-10:30, priority 7
+        [TIME_CLASH] Time clash: CR-101 is booked Mon 09:00-10:00 by #1 (CSE, priority 9); all 2 suitable classroom resources are taken in this period
+   #5  Prof. T. Das (Mechanical), Mon 11:00-12:00, priority 6
+        [CAPACITY] Insufficient capacity: CR-201 holds 120, needs 150 (3 classroom resources checked)
+   #6  Dr. L. Fernandes (Civil), Mon 10:00-11:00, priority 5
+        [EQUIPMENT] Required equipment not available: CR-201 lacks smartboard (3 classroom resources checked)
+   #9  Mr. K. Joshi (AI&DS), Tue 14:00-17:00, priority 7
+        [TIME_CLASH] Time clash: LAB-CS1 is booked Tue 14:00-17:00 by #7 (CSE, priority 8); all 2 suitable lab resources are taken in this period
+   #11 Dr. H. Bose (Chemistry), Tue 10:00-12:00, priority 7
+        [UNAVAILABLE] Resource unavailable: LAB-CHEM is out of service (4 lab resources checked)
+   #12 Mr. D. Singh (CSE), Wed 10:00-12:00, priority 5
+        [UNAVAILABLE] Resource unavailable: LAB-CS2 is closed for maintenance Wed 09:00-13:00 (1 lab resource checked)
+   #13 Student Council (Student Affairs), Tue 09:00-13:00, priority 6
+        [TIME_CLASH] Time clash: AUD-1 is booked Tue 09:00-11:00 by #14 (Alumni Relations, priority 5); the bookings kept there are worth more together (10 vs 6)
+   #18 Dance Club (Student Clubs), Mon 16:30-17:30, priority 2
+        [TIME_CLASH] Time clash: PRJ-02 is booked Mon 16:00-18:00 by #17 (Student Clubs, priority 4); all 2 suitable projector resources are taken in this period
+   #20 Athletics Squad (Sports Committee), Wed 17:00-19:00, priority 5
+        [TIME_CLASH] Time clash: GRD-1 is booked Wed 16:00-18:00 by #19 (Sports Committee, priority 7)
+   #21 Hostel Council (Hostel Affairs), Wed 19:00-21:00, priority 4
+        [OUTSIDE_HOURS] Outside operating hours: GRD-1 is open 06:00-19:00 only (1 sports ground resource checked)
+   #22 Basketball Club (Sports Committee), Wed 18:00-20:00, priority 6
+        [TIME_CLASH] Time clash: CRT-BB is booked Wed 18:30-20:30 by #24 (Sports Committee, priority 9)
+
+8. INDEPENDENT CHECK: schedule is valid - no double booking, every capacity/equipment/availability rule met
+
+9. ONLINE BOOKING ON TOP OF THE SCHEDULE (one request at a time)
+   #101 Dr. S. Gupta, classroom Mon 09:00-10:00: REJECTED [TIME_CLASH] Time clash: CR-101 is booked Mon 09:00-10:00 by #1 (CSE, priority 9)
+   #102 Dr. S. Gupta, classroom Mon 10:00-11:00: ACCEPTED on CR-101
+   #103 Robotics Club, lab Thu 10:00-12:00: ACCEPTED on LAB-CS1
+   #104 Drama Club, seminar_hall Fri 10:00-12:00: REJECTED [CAPACITY] Insufficient capacity: AUD-1 holds 300, needs 400 (1 seminar hall resource checked)
+
+Wrote sample_allocation_result.csv (SAMPLE data results)

@@ -1,0 +1,25 @@
+request_id,requester,dept,resource_type,start,end,priority,status,resource,reason_code,reason
+1,Prof. R. Sharma,CSE,classroom,Mon 09:00,Mon 10:00,9,ACCEPTED,CR-101,,
+2,Dr. A. Khan,ECE,classroom,Mon 09:00,Mon 11:00,8,ACCEPTED,CR-201,,
+3,Dr. P. Nair,Maths,classroom,Mon 09:30,Mon 10:30,7,REJECTED,,TIME_CLASH,"Time clash: CR-101 is booked Mon 09:00-10:00 by #1 (CSE, priority 9); all 2 suitable classroom resources are taken in this period"
+4,Ms. S. Iyer,English,classroom,Mon 09:00,Mon 10:00,4,ACCEPTED,CR-102,,
+5,Prof. T. Das,Mechanical,classroom,Mon 11:00,Mon 12:00,6,REJECTED,,CAPACITY,"Insufficient capacity: CR-201 holds 120, needs 150 (3 classroom resources checked)"
+6,Dr. L. Fernandes,Civil,classroom,Mon 10:00,Mon 11:00,5,REJECTED,,EQUIPMENT,Required equipment not available: CR-201 lacks smartboard (3 classroom resources checked)
+16,Photography Club,Student Clubs,projector,Mon 15:00,Mon 17:00,3,ACCEPTED,PRJ-01,,
+17,Debate Society,Student Clubs,projector,Mon 16:00,Mon 18:00,4,ACCEPTED,PRJ-02,,
+18,Dance Club,Student Clubs,projector,Mon 16:30,Mon 17:30,2,REJECTED,,TIME_CLASH,"Time clash: PRJ-02 is booked Mon 16:00-18:00 by #17 (Student Clubs, priority 4); all 2 suitable projector resources are taken in this period"
+7,Dr. M. Rao,CSE,lab,Tue 14:00,Tue 17:00,8,ACCEPTED,LAB-CS1,,
+8,Dr. N. Pillai,IT,lab,Tue 14:00,Tue 17:00,8,ACCEPTED,LAB-CS2,,
+9,Mr. K. Joshi,AI&DS,lab,Tue 14:00,Tue 17:00,7,REJECTED,,TIME_CLASH,"Time clash: LAB-CS1 is booked Tue 14:00-17:00 by #7 (CSE, priority 8); all 2 suitable lab resources are taken in this period"
+10,Dr. V. Menon,Physics,lab,Tue 14:00,Tue 16:00,6,ACCEPTED,LAB-PHY,,
+11,Dr. H. Bose,Chemistry,lab,Tue 10:00,Tue 12:00,7,REJECTED,,UNAVAILABLE,Resource unavailable: LAB-CHEM is out of service (4 lab resources checked)
+12,Mr. D. Singh,CSE,lab,Wed 10:00,Wed 12:00,5,REJECTED,,UNAVAILABLE,Resource unavailable: LAB-CS2 is closed for maintenance Wed 09:00-13:00 (1 lab resource checked)
+13,Student Council,Student Affairs,seminar_hall,Tue 09:00,Tue 13:00,6,REJECTED,,TIME_CLASH,"Time clash: AUD-1 is booked Tue 09:00-11:00 by #14 (Alumni Relations, priority 5); the bookings kept there are worth more together (10 vs 6)"
+14,Alumni Cell,Alumni Relations,seminar_hall,Tue 09:00,Tue 11:00,5,ACCEPTED,AUD-1,,
+15,Placement Cell,Training & Placement,seminar_hall,Tue 11:00,Tue 13:00,5,ACCEPTED,AUD-1,,
+19,Football Team,Sports Committee,sports_ground,Wed 16:00,Wed 18:00,7,ACCEPTED,GRD-1,,
+20,Athletics Squad,Sports Committee,sports_ground,Wed 17:00,Wed 19:00,5,REJECTED,,TIME_CLASH,"Time clash: GRD-1 is booked Wed 16:00-18:00 by #19 (Sports Committee, priority 7)"
+21,Hostel Council,Hostel Affairs,sports_ground,Wed 19:00,Wed 21:00,4,REJECTED,,OUTSIDE_HOURS,Outside operating hours: GRD-1 is open 06:00-19:00 only (1 sports ground resource checked)
+22,Basketball Club,Sports Committee,indoor_court,Wed 18:00,Wed 20:00,6,REJECTED,,TIME_CLASH,"Time clash: CRT-BB is booked Wed 18:30-20:30 by #24 (Sports Committee, priority 9)"
+23,Badminton Club,Sports Committee,indoor_court,Wed 18:00,Wed 20:00,5,ACCEPTED,CRT-BD,,
+24,Inter-college Meet,Sports Committee,indoor_court,Wed 18:30,Wed 20:30,9,ACCEPTED,CRT-BB,,

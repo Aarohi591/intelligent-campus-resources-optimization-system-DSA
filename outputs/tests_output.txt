@@ -10,5 +10,52 @@ PASS  DP selection clash-free and total matches
 PASS  B&B colouring == max overlap == plain backtracking (60 cases)
 PASS  Welch-Powell colours >= optimum (60 cases)
 PASS  Welch-Powell colouring is proper
+PASS  at()/fmt_time() round trip
+PASS  Old Resource(id, type, capacity) still works
+PASS  Inventory lookup via AVL + by_type sorted by capacity
+PASS  Inventory rejects duplicate resource IDs
+PASS  Overlapping booking on the same resource is rejected (TIME_CLASH)
+PASS  Touching / non-overlapping bookings on the same resource are accepted ([9,10) then [10,11))
+PASS  Same time on different physical rooms is fine; a third request has no room left
+PASS  Cancelling a booking frees the slot
+PASS  Calendar boundaries follow [start, end)
+PASS  Calendar refuses a double booking
+PASS  Capacity: exact fit allowed, best-fit order, too large goes to the bigger room
+PASS  Capacity: demand above every room is rejected with CAPACITY
+PASS  Equipment: only rooms that have it are suitable
+PASS  Equipment: missing equipment is rejected with EQUIPMENT and names the item
+PASS  Out-of-service resource -> UNAVAILABLE
+PASS  Before opening time -> OUTSIDE_HOURS
+PASS  Ending after closing time -> OUTSIDE_HOURS
+PASS  Booking until exactly closing time is allowed
+PASS  Maintenance blackout -> UNAVAILABLE
+PASS  End not after start -> INVALID_TIME
+PASS  Unknown type -> NO_RESOURCE_TYPE
+PASS  Preferred resource of the wrong type -> BAD_PREFERENCE
+PASS  Higher-priority request wins a contested resource
+PASS  DP beats heap-greedy: two 5s (10) kept instead of one 6
+PASS  Rejection reason explains why the bigger single booking lost
+PASS  Large request takes the large room, small one the small room
+PASS  Every request is accepted or rejected, never both, never lost
+PASS  Duplicate request IDs are refused
+PASS  Sample campus: expected rejections and reason codes
+PASS  Sample campus: expected accepted set
+PASS  Sample campus: schedule passes independent verification (no double booking, all rules met)
+PASS  Sample campus: every rejection has a reason from the known list
+PASS  Sample campus: DP stage lifted value above heap-only value
+PASS  Conflict graph lists the competing requests (e.g. 1-2 on classrooms, 13-14 on the auditorium)
+PASS  Verifier catches a deliberately broken schedule
+PASS  All-pinned requests: final value equals the per-resource DP optimum (20 seeds)
+PASS  Stress (40 random campuses): schedule always valid
+PASS  Stress: final value never below heap-only value
+PASS  Stress: every request accepted xor rejected, every rejection explained
+PASS  Colour classes map to valid rooms when a common suitable free room exists
+PASS  Mapping refused when a class has no common suitable room
+PASS  Mapping refused when the only suitable room is already taken
+PASS  Sample campus: colouring report only applies mappings that use no extra rooms
+PASS  max_overlap: [0,5) and [5,10) are not simultaneous
+PASS  max_overlap: overlap by one slot counts
+PASS  max_overlap: touching chain = 1, three at once = 3
+PASS  max_overlap: [0,5) then two starting at 5 = 2
 
-12 / 12 tests passed
+59 / 59 tests passed

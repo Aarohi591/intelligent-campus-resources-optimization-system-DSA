@@ -1,5 +1,13 @@
+"""ALGORITHM BENCHMARK - speed and quality of the data structures and algorithms.
+Input is SYNTHETIC: random requests from a seeded generator (campus.generate_requests).
+These numbers are NOT campus allocation results. For the booking workflow on sample campus data run demo.py.
+Run:  python bench.py   -> prints tables and writes benchmark_results.csv"""
 import csv, statistics, time
 from campus import *
+
+print("=" * 96)
+print("ALGORITHM BENCHMARK on SYNTHETIC random requests - not campus allocation results (see demo.py)")
+print("=" * 96)
 
 def time_ms(f, reps):
     ts = []
@@ -68,5 +76,5 @@ for n in (20, 30, 40):
     print(f"{n:<9} {opt/100:<13.2f} {wp/100:<17.2f} {worse:<15} {bn/100:<15.0f} {'yes' if done else 'no'}")
     rec("colour_large", n, "wp_not_optimal", worse); rec("colour_large", n, "bnb_nodes", round(bn / 100))
 
-with open("results.csv", "w", newline="") as f:
+with open("benchmark_results.csv", "w", newline="") as f:
     w = csv.writer(f); w.writerow(["experiment", "n", "metric", "value"]); w.writerows(rows)
